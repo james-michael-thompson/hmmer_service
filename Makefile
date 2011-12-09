@@ -20,5 +20,8 @@ hmmer_client: hmmer_client.o
 hmmer_server: hmmer_server.o
 	$(CC) $(LDFLAGS) hmmer.pb.o hmmer_server.o -g0 -O3 -o hmmer_server
 
+all: hmmer_client hmmer_server
+	
+
 clean :
 	rm -f hmmer.pb.* *.o hmmer_client hmmer_server

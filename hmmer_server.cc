@@ -6,7 +6,6 @@
 
 #include <gflags/gflags.h>
 #include <glog/logging.h>
-#include <google/protobuf/text_format.h>
 #include <zmq.hpp>
 
 DEFINE_string(send_socket, "tcp://localhost:8001", "Communication channel to client");
@@ -57,6 +56,7 @@ int main(int argc, char* argv[]) {
   while (1) {
     HMMER_Request req;
     receive_request(&req, &receiver);
+    cout << "Received request: " << req.fasta_sequence() << endl;
 
     HMMER_Response resp;
     resp.set_job_id(1);
