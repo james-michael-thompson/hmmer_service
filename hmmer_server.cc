@@ -46,7 +46,6 @@ int main(int argc, char* argv[]) {
   // against is compatible with the version of the headers we compiled against
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
-  // Setup communication channels
   context_t ctx(1);
   socket_t sender(ctx, ZMQ_PUSH);
   socket_t receiver(ctx, ZMQ_PULL);
