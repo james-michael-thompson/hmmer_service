@@ -1,0 +1,10 @@
+Prerequisites:
+- protobuf (http://code.google.com/p/protobuf/)
+- gflags (http://code.google.com/p/google-gflags/)
+- glog (http://code.google.com/p/google-glog/)
+- zeromq (http://www.zeromq.org/)
+
+Compiling:
+- Build the hmmer_client (make hmmer_client)
+- Build the hmmer_server (make hmmer_server)
+
