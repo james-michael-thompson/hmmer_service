@@ -23,5 +23,9 @@ hmmer_server: hmmer_server.o
 all: hmmer_client hmmer_server
 	
 
-clean :
-	rm -f hmmer.pb.* *.o hmmer_client hmmer_server
+clean:
+	rm -f hmmer.pb.* *.o hmmer_client hmmer_server shell_test
+
+shell_test: shell.cc
+	$(CC) shell.cc -o shell_test
+
