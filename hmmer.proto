@@ -1,0 +1,9 @@
+message HMMER_Request {
+  // Query sequence in FASTA format
+  required string fasta_sequence = 1;
+}
+
+message HMMER_Response {
+  // Unique identifier for the request
+  required uint64 job_id = 1;
+}
