@@ -1,8 +1,8 @@
 CC=g++
 CFLAGS=-I/usr/local/include -c -Wall -pedantic
-LDFLAGS=-L/usr/local/lib -lprotobuf -lgflags -lglog -lzmq -g0 -O3
+LDFLAGS=-L/usr/local/lib -lprotobuf -lgflags -lglog -lzmq -g3 -O03 -O03 -O0
 
-proto :
+proto: hmmer.proto
 	protoc --cpp_out=. hmmer.proto
 
 hmmer.pb.o: proto hmmer.pb.cc
@@ -24,8 +24,11 @@ all: hmmer_client hmmer_server
 	
 
 clean:
-	rm -f hmmer.pb.* *.o hmmer_client hmmer_server shell_test
+	rm -f hmmer.pb.* *.o hmmer_client hmmer_server shell_test fork_exec_test
 
-shell_test: shell.cc
+shell: shell.cc
 	$(CC) shell.cc -o shell_test
+
+fork: fork_exec.cc
+	$(CC) fork_exec.cc -o fork_exec_test
 
