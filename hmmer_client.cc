@@ -34,11 +34,14 @@ void read_sequence_or_die(const string& filename, HMMER_Request* req) {
 // Writes a HMMER_Request to the server's input queue
 void send_request(const HMMER_Request& req, zmq::socket_t* sender) {
   CHECK_NOTNULL(sender);
-  zmq::message_t msg(req.ByteSize());
+
+  int num_bytes = req.ByteSize();
 
   string m;
   req.SerializeToString(&m);
-  sprintf((char *) msg.data(), "%s", m.c_str());
+
+  zmq::message_t msg(num_bytes);
+  snprintf((char *) msg.data(), num_bytes, "%s", m.c_str());
 
   sender->send(msg);
 }
@@ -56,6 +59,29 @@ void receive_response(HMMER_Response* resp, zmq::socket_t* receiver) {
   iss >> m;
 
   resp->ParseFromString(m);
+}
+
+void emit(const HMMER_Response& resp) {
+  cout << "job_id: " << resp.job_id() << endl;
+  cout << "num_aln: " << resp.alignments_size() << endl;
+
+  for (int i = 0; i < resp.alignments_size(); ++i) {
+    const HMMER_Response_Alignment& aln = resp.alignments(i);
+    
+    cout << "\t" << "template_id: " << aln.template_id() << endl;
+    cout << "\t" << "query_start: " << aln.query_start() << endl;
+    cout << "\t" << "template_start: " << aln.template_start() << endl;
+    cout << "\t" << "aligned_query_seq: " << aln.aligned_query_seq() << endl;
+    cout << "\t" << "aligned_template_seq: " << aln.aligned_template_seq() << endl;
+    
+    if (aln.has_log_e_value()) {
+      cout << "\t" << "log(e_value): " << aln.log_e_value() << endl;
+    }
+
+    if (aln.has_score()) {
+      cout << "\t" << "score: " << aln.score() << endl;
+    }
+  }
 }
 
 int main(int argc, char* argv[]) {
@@ -83,7 +109,7 @@ int main(int argc, char* argv[]) {
 
   HMMER_Response resp;
   receive_response(&resp, &receiver);
-  cout << "Received response: " << resp.job_id() << endl;
+  emit(resp);
 
   return 0;
 }

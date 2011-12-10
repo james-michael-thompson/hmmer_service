@@ -16,10 +16,13 @@ using namespace std;
 // Writes a HMMER_Response to the client
 void send_response(const HMMER_Response& resp, zmq::socket_t* sender) {
   CHECK_NOTNULL(sender);
-  zmq::message_t msg(resp.ByteSize());
+
+  int num_bytes = resp.ByteSize();
 
   string m;
   resp.SerializeToString(&m);
+
+  zmq::message_t msg(num_bytes);
   sprintf((char *) msg.data(), "%s", m.c_str());
 
   sender->send(msg);
