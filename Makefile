@@ -1,6 +1,6 @@
 CC=g++
-CFLAGS=-I/usr/local/include -c -Wall -pedantic
-LDFLAGS=-L/usr/local/lib -lprotobuf -lgflags -lglog -lzmq -g3 -O03 -O03 -O0
+CFLAGS=-I/work/tex/install_dig/include -I/usr/local/include -c -Wall
+LDFLAGS=-L/work/tex/install_dig/lib -L/usr/local/lib -lprotobuf -lgflags -lglog -lzmq -g3 -O03 -O03 -O0
 
 proto: hmmer.proto
 	protoc --cpp_out=. hmmer.proto
@@ -22,12 +22,14 @@ hmmer_server: hmmer_server.o
 
 all: hmmer_client hmmer_server
 	
-
 clean:
-	rm -f hmmer.pb.* *.o hmmer_client hmmer_server shell_test fork_exec_test
+	rm -f hmmer.pb.* *.o hmmer_client hmmer_server shell fork_exec_test
 
-shell: shell.cc
-	$(CC) shell.cc -o shell_test
+shell.o: shell.cc hmmer.pb.o
+	$(CC) $(CFLAGS) shell.cc -o shell.o
+
+shell: shell.o
+	$(CC) $(LDFLAGS) hmmer.pb.o shell.o -g0 -O3 -o shell
 
 fork: fork_exec.cc
 	$(CC) fork_exec.cc -o fork_exec_test
