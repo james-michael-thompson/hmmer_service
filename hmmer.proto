@@ -5,13 +5,13 @@ message HMMER_Request {
 
 message HMMER_Response {
   message Alignment {
-    required string template_id = 1;
-    required uint32 query_start = 2;
-    required uint32 template_start = 3;
-    required string aligned_query_seq = 4;
-    required string aligned_template_seq = 5;
-    optional float log_e_value = 6; // base e
-    optional float score = 7; // raw bit score
+    required string template_id = 1          [ default = "blank" ];
+    required uint32 query_start = 2          [ default = 0 ];
+    required uint32 template_start = 3       [ default = 0 ];
+    required string aligned_query_seq = 4    [ default = "" ];
+    required string aligned_template_seq = 5 [ default = "" ];
+    optional float log_evalue = 6            [ default = 0 ];
+    optional float bit_score = 7             [ default = 0 ];
   }
 
   // Unique identifier for the request
