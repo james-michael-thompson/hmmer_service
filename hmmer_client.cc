@@ -67,15 +67,15 @@ void emit(const HMMER_Response& resp) {
 
   for (int i = 0; i < resp.alignments_size(); ++i) {
     const HMMER_Response_Alignment& aln = resp.alignments(i);
-    
+
     cout << "\t" << "template_id: " << aln.template_id() << endl;
     cout << "\t" << "query_start: " << aln.query_start() << endl;
     cout << "\t" << "template_start: " << aln.template_start() << endl;
     cout << "\t" << "aligned_query_seq: " << aln.aligned_query_seq() << endl;
     cout << "\t" << "aligned_template_seq: " << aln.aligned_template_seq() << endl;
-    
-    if (aln.has_log_e_value()) {
-      cout << "\t" << "log(e_value): " << aln.log_e_value() << endl;
+
+    if (aln.has_log_evalue()) {
+      cout << "\t" << "log(evalue): " << aln.log_evalue() << endl;
     }
 
     if (aln.has_score()) {
