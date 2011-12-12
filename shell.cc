@@ -119,6 +119,12 @@ void parse_hmmer_output( const vector<string> & lines, HMMER_Response* resp ) {
   } // lines
 
   cout << "parsed " << resp->alignments_size() << " alignments." << endl;
+  cout << "best alignment has ln(evalue) = " << resp->alignments(0).log_evalue() << endl;
+  cout << "## query " << resp->alignments(0).template_id() << endl;
+  cout << "# hmmer alignment" << endl;
+  cout << "scores_from_program: " << resp->alignments(0).log_evalue() << " " << resp->alignments(0).bit_score() << endl;
+  cout << resp->alignments(0).query_start()-1 << " " << resp->alignments(0).aligned_query_seq() << endl;
+  cout << resp->alignments(0).template_start()-1 << " " << resp->alignments(0).aligned_template_seq() << endl;
 } // parse_hmmer_output
 
 int main(int argc, char* argv[]) {
