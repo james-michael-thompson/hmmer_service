@@ -84,7 +84,7 @@ void parse_hmmer_output( const vector<string> & lines, HMMER_Response* resp ) {
     } else if ( i->substr(0,finished_tag.size()) == finished_tag ) {
       break; // finished parsing
     } else if ( i->substr(0,2) == ">>" || remove_newlines(*i).length() == 0 ) {
-      = false;
+      parsing = false;
     } else if ( parsing ) {
       string query_line = remove_newlines(*i); ++i;
       string cons_line  = remove_newlines(*i); ++i;
